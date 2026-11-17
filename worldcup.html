@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>🏆 이상형 월드컵</title>
+<meta property="og:title" content="🏆 이상형 월드컵">
+<meta property="og:description" content="15명 후보 · 14경기 토너먼트">
+<style>
+  :root{
+    --bg1:#0a1220;
+    --bg2:#122138;
+    --gold:#f6c453;
+    --gold2:#eaa334;
+    --ink:#f4f7fc;
+    --muted:#9aa8c2;
+    --card1:#22314e;
+    --card2:#16233a;
+    --line:rgba(255,255,255,.13);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(120% 80% at 50% 0%, #1b3157 0%, rgba(27,49,87,0) 60%),
+      linear-gradient(170deg, var(--bg1) 0%, var(--bg2) 55%, #0b1526 100%);
+    background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    user-select:none;
+  }
+  .app{
+    max-width:430px;margin:0 auto;
+    min-height:100dvh;
+    padding:calc(14px + env(safe-area-inset-top)) 18px calc(18px + env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;
+  }
+  .screen{flex:1;display:none;flex-direction:column;animation:fadeIn .28s ease both;}
+  .screen.active{display:flex;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  /* ---------- start ---------- */
+  #screen-start{justify-content:center;text-align:center;padding-bottom:8vh;}
+  .crown{font-size:52px;line-height:1;filter:drop-shadow(0 8px 18px rgba(246,196,83,.35));animation:float 3.4s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+  h1{font-size:29px;letter-spacing:-.5px;margin:14px 0 6px;font-weight:800;}
+  .sub{color:var(--muted);font-size:14.5px;line-height:1.6;margin:0;}
+  .chips{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:22px 0 4px;}
+  .chip{
+    font-size:12.5px;color:#cfd9ea;padding:7px 12px;border-radius:999px;
+    background:rgba(255,255,255,.055);border:1px solid var(--line);
+  }
+  .names-preview{
+    margin:22px 0 0;font-size:12.5px;line-height:1.9;color:#8797b3;
+    word-break:keep-all;
+  }
+  .start-btn{
+    margin:30px auto 0;width:100%;max-width:320px;height:62px;border:0;border-radius:18px;
+    font-size:18.5px;font-weight:800;color:#231703;letter-spacing:-.3px;
+    background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+    box-shadow:0 14px 30px -10px rgba(246,196,83,.55),inset 0 1px 0 rgba(255,255,255,.45);
+    transition:transform .12s ease,box-shadow .12s ease;
+  }
+  .start-btn:active{transform:scale(.975);box-shadow:0 8px 18px -10px rgba(246,196,83,.5);}
+  .foot{margin-top:18px;font-size:11.5px;color:#6b7b96;line-height:1.6;}
+
+  /* ---------- game ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .badge{
+    font-size:13px;font-weight:800;letter-spacing:.2px;padding:8px 14px;border-radius:999px;
+    color:#0d1726;background:linear-gradient(135deg,var(--gold),var(--gold2));
+    box-shadow:0 6px 16px -8px rgba(246,196,83,.8);
+    white-space:nowrap;
+  }
+  .counter{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;}
+  .bar{height:6px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden;margin-bottom:16px;}
+  .bar > i{display:block;height:100%;width:0%;border-radius:999px;
+    background:linear-gradient(90deg,var(--gold),#ffdf94);
+    transition:width .45s cubic-bezier(.3,.9,.2,1);}
+
+  .arena{flex:1;display:flex;flex-direction:column;gap:11px;justify-content:center;padding-bottom:4px;}
+  .card{
+    position:relative;flex:1 1 0;min-height:118px;font:inherit;color:var(--ink);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border-radius:22px;border:1px solid var(--line);
+    background:linear-gradient(160deg,var(--card1) 0%,var(--card2) 100%);
+    box-shadow:0 12px 26px -18px #000, inset 0 1px 0 rgba(255,255,255,.07);
+    transition:transform .16s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease, opacity .22s ease;
+    overflow:hidden;
+  }
+  .card::after{
+    content:"";position:absolute;inset:0;border-radius:22px;
+    background:radial-gradient(120% 90% at 50% 0%, rgba(255,255,255,.09), transparent 62%);
+    pointer-events:none;
+  }
+  .card:active{transform:scale(.977);}
+  .card .tag{font-size:11px;letter-spacing:2px;color:#7f90ad;font-weight:700;margin-bottom:6px;}
+  .card .name{
+    font-size:29px;font-weight:800;letter-spacing:-.6px;line-height:1.15;text-align:center;
+    padding:0 12px;word-break:keep-all;
+  }
+  .card .win{position:absolute;top:10px;right:12px;font-size:17px;opacity:0;transform:scale(.6);transition:.2s;}
+  .card.picked{
+    border-color:rgba(246,196,83,.95);
+    background:linear-gradient(160deg,#f8cf74 0%,#e79f31 100%);
+    box-shadow:0 0 0 2px rgba(246,196,83,.35),0 16px 36px -14px rgba(246,196,83,.6);
+    transform:scale(1.018);
+  }
+  .card.picked .name{color:#221603;}
+  .card.picked .tag{color:#5c4408;}
+  .card.picked .win{opacity:1;transform:scale(1);filter:grayscale(0);}
+  .card.dimmed{opacity:.36;transform:scale(.985);}
+  .vs{
+    align-self:center;flex:0 0 auto;
+    font-size:12.5px;font-weight:900;letter-spacing:1.5px;color:#c9d4e7;
+    background:rgba(255,255,255,.07);border:1px solid var(--line);
+    padding:6px 14px;border-radius:999px;
+  }
+  .arena.fresh .card{animation:pop .3s ease both;}
+  .arena.fresh .card:nth-child(3){animation-delay:.05s;}
+  @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.985);}to{opacity:1;transform:none;}}
+
+  .toast{
+    position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));
+    transform:translate(-50%,16px);opacity:0;pointer-events:none;
+    max-width:min(360px,88vw);padding:11px 16px;border-radius:14px;
+    background:rgba(20,32,52,.96);border:1px solid rgba(246,196,83,.42);
+    color:#f5e7c4;font-size:13px;line-height:1.45;text-align:center;
+    box-shadow:0 16px 32px -14px #000;transition:.32s ease;z-index:30;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  /* ---------- result ---------- */
+  #screen-result{text-align:center;justify-content:center;padding-bottom:2vh;}
+  .res-title{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:1.4px;margin-bottom:4px;}
+  .champ-trophy{font-size:46px;line-height:1;margin-top:2px;animation:float 3.6s ease-in-out infinite;}
+  .champ-name{
+    font-size:33px;font-weight:900;letter-spacing:-.7px;margin:8px 0 2px;
+    background:linear-gradient(135deg,#ffe7a8,#f6c453 55%,#e79f31);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .champ-label{font-size:12.5px;color:var(--muted);letter-spacing:1px;margin-bottom:20px;}
+  .board{
+    border-radius:20px;border:1px solid var(--line);
+    background:linear-gradient(160deg,rgba(34,49,78,.92),rgba(22,35,58,.92));
+    padding:6px 16px;text-align:left;
+  }
+  .row{display:flex;align-items:center;gap:12px;padding:13px 2px;border-top:1px solid rgba(255,255,255,.075);}
+  .row:first-child{border-top:0;}
+  .medal{font-size:19px;width:26px;text-align:center;flex:0 0 auto;}
+  .row .who{flex:1;font-size:17.5px;font-weight:700;letter-spacing:-.3px;}
+  .row .rk{font-size:11.5px;color:#8494b0;letter-spacing:.6px;white-space:nowrap;}
+  .row.top .who{font-size:19px;font-weight:800;}
+  .res-note{font-size:11.5px;color:#6f7f9b;margin:14px 0 0;letter-spacing:.2px;}
+  .actions{margin-top:22px;display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    height:56px;border-radius:16px;border:0;font-family:inherit;font-size:16.5px;font-weight:800;letter-spacing:-.2px;
+    width:100%;transition:transform .12s ease,background .18s ease;
+  }
+  .btn:active{transform:scale(.978);}
+  .btn-primary{
+    color:#231703;background:linear-gradient(135deg,var(--gold),var(--gold2));
+    box-shadow:0 12px 26px -12px rgba(246,196,83,.6),inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .btn-primary.ok{background:linear-gradient(135deg,#8fe0a8,#4fbf78);color:#08301a;}
+  .btn-ghost{color:#dbe4f2;background:rgba(255,255,255,.07);border:1px solid var(--line);}
+
+  .copybox{position:fixed;inset:0;background:rgba(6,11,20,.82);display:none;align-items:center;justify-content:center;padding:22px;z-index:40;}
+  .copybox.show{display:flex;}
+  .copybox .inner{width:100%;max-width:380px;border-radius:18px;background:#131f33;border:1px solid var(--line);padding:18px;}
+  .copybox h3{margin:0 0 10px;font-size:14px;color:var(--gold);}
+  .copybox textarea{
+    width:100%;height:132px;resize:none;border-radius:12px;border:1px solid var(--line);
+    background:#0c1626;color:#e8eefa;font-size:13.5px;line-height:1.6;padding:12px;
+    font-family:inherit;user-select:text;-webkit-user-select:text;
+  }
+  .copybox p{font-size:11.5px;color:#8394b1;margin:8px 0 12px;line-height:1.5;}
+  .copybox .btn{height:46px;font-size:15px;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- 시작 화면 -->
+  <section class="screen active" id="screen-start">
+    <div class="crown">🏆</div>
+    <h1>이상형 월드컵</h1>
+    <p class="sub">15명의 후보, 단 한 명의 우승자.<br>마음이 가는 쪽을 눌러 주세요.</p>
+    <div class="chips">
+      <span class="chip">👥 15명 후보</span>
+      <span class="chip">⚔️ 14경기</span>
+      <span class="chip">🎲 매번 랜덤 대진</span>
+    </div>
+    <p class="names-preview" id="previewNames"></p>
+    <button class="start-btn" id="startBtn">시작하기</button>
+    <p class="foot">16강 7경기 · 8강 4경기 · 4강 2경기 · 결승 1경기<br>부전승 1명은 8강에 자동 진출합니다</p>
+  </section>
+
+  <!-- 대결 화면 -->
+  <section class="screen" id="screen-game">
+    <div class="topbar">
+      <span class="badge" id="roundBadge">16강 1/7</span>
+      <span class="counter" id="counter">1 / 14 경기</span>
+    </div>
+    <div class="bar"><i id="progressFill"></i></div>
+    <div class="arena" id="arena">
+      <button class="card" id="cardA" type="button">
+        <span class="win">✅</span>
+        <span class="tag">참가자</span>
+        <span class="name" id="nameA">-</span>
+      </button>
+      <span class="vs">VS</span>
+      <button class="card" id="cardB" type="button">
+        <span class="win">✅</span>
+        <span class="tag">참가자</span>
+        <span class="name" id="nameB">-</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 결과 화면 -->
+  <section class="screen" id="screen-result">
+    <div class="res-title">FINAL RESULT</div>
+    <div class="champ-trophy">🏆</div>
+    <div class="champ-name" id="champName">-</div>
+    <div class="champ-label">최종 우승 (1위)</div>
+    <div class="board">
+      <div class="row top">
+        <span class="medal">🥈</span>
+        <span class="who" id="secondName">-</span>
+        <span class="rk">준우승 · 2위</span>
+      </div>
+      <div class="row">
+        <span class="medal">🥉</span>
+        <span class="who" id="thirdNames">-</span>
+        <span class="rk">4강 진출</span>
+      </div>
+    </div>
+    <p class="res-note" id="resNote">15명 · 14경기 완주</p>
+    <div class="actions">
+      <button class="btn btn-primary" id="copyBtn">📋 결과 복사하기</button>
+      <button class="btn btn-ghost" id="againBtn">🔄 다시 하기</button>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="copybox" id="copyBox">
+  <div class="inner">
+    <h3>결과 복사</h3>
+    <textarea id="copyArea" readonly></textarea>
+    <p>아래 글을 길게 눌러 전체 선택 후 복사해 주세요.</p>
+    <button class="btn btn-primary" id="copyBoxClose">닫기</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CANDIDATES = ["박보아","이정은","정유진","박아름","박혜윤","김승애","곽근열","현용권","유숙경","박남언","조상준","함경인","이상우","황영권","이은기"];
+
+  var ROUNDS = [
+    {key:"R16", label:"16강", matches:7},
+    {key:"QF",  label:"8강", matches:4},
+    {key:"SF",  label:"4강", matches:2},
+    {key:"F",   label:"결승", matches:1}
+  ];
+  var TOTAL_MATCHES = 14;
+
+  var state = null;
+  var busy = false;
+
+  var el = {
+    start: document.getElementById("screen-start"),
+    game: document.getElementById("screen-game"),
+    result: document.getElementById("screen-result"),
+    preview: document.getElementById("previewNames"),
+    startBtn: document.getElementById("startBtn"),
+    badge: document.getElementById("roundBadge"),
+    counter: document.getElementById("counter"),
+    fill: document.getElementById("progressFill"),
+    arena: document.getElementById("arena"),
+    cardA: document.getElementById("cardA"),
+    cardB: document.getElementById("cardB"),
+    nameA: document.getElementById("nameA"),
+    nameB: document.getElementById("nameB"),
+    champ: document.getElementById("champName"),
+    second: document.getElementById("secondName"),
+    third: document.getElementById("thirdNames"),
+    note: document.getElementById("resNote"),
+    copyBtn: document.getElementById("copyBtn"),
+    againBtn: document.getElementById("againBtn"),
+    toast: document.getElementById("toast"),
+    copyBox: document.getElementById("copyBox"),
+    copyArea: document.getElementById("copyArea"),
+    copyBoxClose: document.getElementById("copyBoxClose")
+  };
+
+  el.preview.textContent = CANDIDATES.join(" · ");
+
+  function shuffle(list){
+    var a = list.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t = a[i]; a[i]=a[j]; a[j]=t;
+    }
+    return a;
+  }
+
+  function showToast(msg, ms){
+    el.toast.textContent = msg;
+    el.toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ el.toast.classList.remove("show"); }, ms || 2400);
+  }
+
+  function buzz(){
+    try{ if(navigator.vibrate) navigator.vibrate(12); }catch(e){}
+  }
+
+  function showScreen(name){
+    el.start.classList.toggle("active", name === "start");
+    el.game.classList.toggle("active", name === "game");
+    el.result.classList.toggle("active", name === "result");
+  }
+
+  // ---- tournament ----
+  function newTournament(){
+    var seeded = shuffle(CANDIDATES);
+    var bye = seeded.pop();            // 부전승 1명 → 8강 자동 진출
+    var pairs = [];
+    for(var i=0;i<seeded.length;i+=2){
+      pairs.push([seeded[i], seeded[i+1]]);
+    }
+    state = {
+      bye: bye,
+      roundIndex: 0,
+      matchIndex: 0,
+      pair: pairs,
+      winners: [],
+      done: 0,
+      sfLosers: [],
+      finalLoser: null,
+      champion: null
+    };
+    showScreen("game");
+    renderMatch();
+    setTimeout(function(){
+      showToast("🎫 " + bye + " 님은 부전승으로 8강 진출!", 2800);
+    }, 420);
+  }
+
+  function currentRoundLabel(){
+    var r = ROUNDS[state.roundIndex];
+    if(state.roundIndex === 0){
+      return r.label + " " + (state.matchIndex+1) + "/" + r.matches;
+    }
+    return r.label + " " + (state.matchIndex+1) + "/" + r.matches;
+  }
+
+  function renderMatch(){
+    var pair = state.pair[state.matchIndex];
+    el.nameA.textContent = pair[0];
+    el.nameB.textContent = pair[1];
+    el.cardA.classList.remove("picked","dimmed");
+    el.cardB.classList.remove("picked","dimmed");
+    el.badge.textContent = currentRoundLabel();
+    el.counter.textContent = (state.done + 1) + " / " + TOTAL_MATCHES + " 경기";
+    el.fill.style.width = (state.done / TOTAL_MATCHES * 100) + "%";
+    el.arena.classList.remove("fresh");
+    void el.arena.offsetWidth;
+    el.arena.classList.add("fresh");
+  }
+
+  function advanceRound(){
+    var round = ROUNDS[state.roundIndex];
+    if(state.winners.length === round.matches){
+      // 라운드 종료 → 다음 라운드 대진 구성
+      var next = state.winners.slice();
+      state.roundIndex++;
+      state.matchIndex = 0;
+      state.winners = [];
+      if(state.roundIndex === 1){
+        // 8강: 부전승 선수를 랜덤 위치에 삽입
+        var pos = Math.floor(Math.random() * (next.length + 1));
+        next.splice(pos, 0, state.bye);
+      }
+      var pairs = [];
+      for(var i=0;i<next.length;i+=2){
+        pairs.push([next[i], next[i+1]]);
+      }
+      state.pair = pairs;
+      return true;
+    }
+    return false;
+  }
+
+  function pick(which){
+    if(busy) return;
+    busy = true;
+    buzz();
+
+    var pair = state.pair[state.matchIndex];
+    var winIdx = which === "A" ? 0 : 1;
+    var winName = pair[winIdx];
+    var loseName = pair[1 - winIdx];
+
+    var winCard = which === "A" ? el.cardA : el.cardB;
+    var loseCard = which === "A" ? el.cardB : el.cardA;
+    winCard.classList.add("picked");
+    loseCard.classList.add("dimmed");
+    winCard.classList.remove("dimmed");
+    loseCard.classList.remove("picked");
+
+    state.done++;
+    el.fill.style.width = (state.done / TOTAL_MATCHES * 100) + "%";
+
+    setTimeout(function(){
+      // 결승이면 결과 확정
+      if(ROUNDS[state.roundIndex].key === "F"){
+        state.champion = winName;
+        state.finalLoser = loseName;
+        finish();
+        busy = false;
+        return;
+      }
+
+      if(ROUNDS[state.roundIndex].key === "SF"){
+        state.sfLosers.push(loseName);
+      }
+
+      state.winners.push(winName);
+      state.matchIndex++;
+
+      if(state.matchIndex >= state.pair.length){
+        advanceRound();
+      }
+      renderMatch();
+      busy = false;
+    }, 430);
+  }
+
+  function finish(){
+    el.champ.textContent = state.champion;
+    el.second.textContent = state.finalLoser;
+    el.third.textContent = state.sfLosers.join(" · ");
+    el.note.textContent = "15명 후보 · " + state.done + "경기 완주";
+    el.copyBtn.classList.remove("ok");
+    el.copyBtn.textContent = "📋 결과 복사하기";
+    el.fill.style.width = "100%";
+    showScreen("result");
+  }
+
+  function resultText(){
+    return [
+      "🏆 이상형 월드컵 결과",
+      "",
+      "🥇 1위 : " + state.champion,
+      "🥈 2위 : " + state.finalLoser,
+      "🥉 4강 : " + state.sfLosers.join(", ")
+    ].join("\n");
+  }
+
+  function copyResult(){
+    var text = resultText();
+
+    function ok(){
+      el.copyBtn.classList.add("ok");
+      el.copyBtn.textContent = "✅ 복사 완료!";
+      showToast("카톡에 붙여넣기 하세요 📋", 2000);
+      setTimeout(function(){
+        el.copyBtn.classList.remove("ok");
+        el.copyBtn.textContent = "📋 결과 복사하기";
+      }, 2600);
+    }
+
+    function fallback(){
+      el.copyArea.value = text;
+      el.copyBox.classList.add("show");
+      el.copyArea.focus();
+      el.copyArea.select();
+    }
+
+    function legacyCopy(){
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "0";
+      ta.style.left = "0";
+      ta.style.width = "1px";
+      ta.style.height = "1px";
+      ta.style.opacity = "0";
+      ta.style.fontSize = "16px";
+      document.body.appendChild(ta);
+      var done = false;
+      try{
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        done = document.execCommand("copy");
+      }catch(e){ done = false; }
+      document.body.removeChild(ta);
+      return done;
+    }
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok).catch(function(){
+        // 카톡 인앱브라우저 등 clipboard API 차단 시
+        if(legacyCopy()){ ok(); } else { fallback(); }
+      });
+    } else {
+      if(legacyCopy()){ ok(); } else { fallback(); }
+    }
+  }
+
+  el.startBtn.addEventListener("click", newTournament);
+  el.cardA.addEventListener("click", function(){ pick("A"); });
+  el.cardB.addEventListener("click", function(){ pick("B"); });
+  el.copyBtn.addEventListener("click", copyResult);
+  el.againBtn.addEventListener("click", function(){
+    el.copyBox.classList.remove("show");
+    newTournament();
+  });
+  el.copyBoxClose.addEventListener("click", function(){
+    el.copyBox.classList.remove("show");
+  });
+  el.copyBox.addEventListener("click", function(e){
+    if(e.target === el.copyBox) el.copyBox.classList.remove("show");
+  });
+})();
+</script>
+</body>
+</html>
